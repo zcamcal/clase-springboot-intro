@@ -1,73 +1,66 @@
 package cl.zcamcal.clase.controllers;
 
+import java.util.ArrayList;
+
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
+import cl.zcamcal.clase.dto.EquipoDto;
+import cl.zcamcal.clase.dto.JugadorDto;
+
+import java.util.List;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("jugadores")
 public class JugadoresController {
 
-  @GetMapping(path = "numero", produces = MediaType.TEXT_PLAIN_VALUE)
-  public ResponseEntity<String> obtenerNmero(@RequestParam Integer numero) {
-    // Numero entero sin punto.
-    return ResponseEntity.internalServerError().body("ha");
+  private List<JugadorDto> jugadores;
+  private List<EquipoDto> equipos;
+
+  public JugadoresController() {
+    this.jugadores = new ArrayList<>();
+    this.equipos = new ArrayList<>();
+
+    EquipoDto losJiJi = new EquipoDto("los jiji");
+    EquipoDto sandijuelas = new EquipoDto("sandijuelas");
+
+    this.equipos.add(losJiJi);
+    this.equipos.add(sandijuelas);
   }
 
-  @GetMapping(path = "boolean")
-  public Boolean obtenerNombre(@RequestParam Boolean verdaderoOfalso) {
-    // Debe ser true o false
-    return verdaderoOfalso;
+  @PutMapping(path = "///", consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<List<JugadorDto>>  buscarJugadores(@RequestParam(name = "sandijuela", required = false) String pais) {
+    return ResponseEntity.badRequest().build();
   }
 
-  @GetMapping(path = "map")
-  public Map<String, Integer> obtenerMap(@RequestParam String texto) {
-    Map<String, Integer> algo = new HashMap<>();
-    algo.put("llave", 2);
+  @RequestMapping("")
+  public ResponseEntity<JugadorDto> crearJugador(@RequestBody(required = true) JugadorDto jugador) {
+    jugador = null;
+    this.jugadores.add(jugador);
 
-    return algo;
+    if(jugador == null) {
+      ResponseEntity.badRequest().build();
+    }
+
+    if(jugador.getNombre() == null || jugador.getApellido().equalsIgnoreCase("")){
+      ResponseEntity.badRequest().build();
+    }
+
+    return ResponseEntity.ok(jugador);
   }
 
-  @GetMapping(path = "numeroReal")
-  public ResponseEntity<Response> obtenerReal(@RequestParam Float numeroReal) {
-    // Debe ser un numero flotante separado por punto, ex= 2.5
-    Response responseInner = new Response();
-    responseInner.setData(5);
-    responseInner.setSuccess(true);
+  @PatchMapping(path = "/{jugador}/{equipo}")
+  public ResponseEntity<JugadorDto> agregarJugadorAlEquipo(@PathVariable(name = "jugador") String jugador, @PathVariable(name = "equipo") String equipo) {
+    //validar que exista jugador 
+    //validar que exista equipo 
+    JugadorDto jugadorEncontrado = null;
+    jugadorEncontrado.setEquipo(jugador);
 
-    Response response = new Response();
-    response.setData(responseInner);
-    response.setSuccess(true);
+    EquipoDto equipoEncontrado = null;
 
-    return ResponseEntity.status(399).body(response);
+    return ResponseEntity.ok(null);
   }
 
-}
-
-class Response {
-
-  private boolean success;
-
-  private Object data;
-
-  public Response(){}
-
-  public boolean getSuccess(){
-    return this.success;
-  }
-
-  public Object getData(){
-    return this.data;
-  }
-
-  public void setData(Object data) {
-    this.data  = data;
-  }
- 
-  public void setSuccess(boolean success) {
-    this.success  = success;
-  } 
 }
