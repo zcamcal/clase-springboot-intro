@@ -20,6 +20,8 @@ public class JugadorInMemoryRepository {
 
   public JugadorInMemoryRepository() {
     logger = LoggerFactory.getLogger(JugadorInMemoryRepository.class);
+    logger.info("mi referencia: {}", this);
+
     this.jugadores = new ArrayList<>();
   }
 

@@ -1,5 +1,7 @@
 package cl.zcamcal.clase.controllers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 
 import cl.zcamcal.clase.controllers.request.JugadorRequest;
@@ -19,9 +21,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("jugadores")
 public class JugadoresController {
 
+  final private Logger logger;
   private JugadorInMemoryRepository repository;
 
   public JugadoresController(JugadorInMemoryRepository repository) {
+    logger = LoggerFactory.getLogger(JugadoresController.class);
+    logger.info("referencia repository: {}", repository.toString());
+
+    logger.info("mi referencia {}", this);
+
     this.repository = repository;
   }
 
