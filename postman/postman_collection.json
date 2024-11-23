@@ -1,0 +1,313 @@
+{
+	"info": {
+		"_postman_id": "5e291bd4-d3bf-4ea3-823b-9b44ba2af0a6",
+		"name": "clase-spring",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39947840"
+	},
+	"item": [
+		{
+			"name": "jugadores",
+			"item": [
+				{
+					"name": "buscar jugador",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/jugadores/<uuid>",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"jugadores",
+								"<uuid>"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obtener jugadores",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/jugadores",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"jugadores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "crear jugador",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nombre\": \"jose\",\n  \"apellido\": \"perez\",\n  \"pais\": \"chile\",\n  \"posicion\": \"delantero\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/jugadores",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"jugadores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "modificar jugador",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nombre\": \"jose\",\n  \"apellido\": \"perez\",\n  \"pais\": \"chile\",\n  \"equipo\": \"5b483188-83ca-451c-82bf-c441fa71b63a\",\n  \"posicion\": \"delantero\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/jugadores/<uuid>",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"jugadores",
+								"<uuid>"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "asignar jugador a equipo",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"equipo\": \"5b483188-83ca-451c-82bf-c441fa71b63a\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/jugadores/<uuid>/equipos",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"jugadores",
+								"<uuid>",
+								"equipos"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "equipos",
+			"item": [
+				{
+					"name": "obtener equipos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/equipos",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"equipos"
+							],
+							"query": [
+								{
+									"key": "pais",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buscar equipo",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/equipos/<uuid>",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"equipos",
+								"<uuid>"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "crear equipo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Los JiJi\",\n    \"pais\": \"chile\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/equipos",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"equipos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "modificar equipo",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Los JiJi\",\n    \"pais\": \"chile\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/equipos/<uuid>",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"equipos",
+								"<uuid>"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "agregar jugador",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/equipos/<uuid>/jugadores/<uuid>",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"equipos",
+								"<uuid>",
+								"jugadores",
+								"<uuid>"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "agregar jugador Copy",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "equipo-solicitante",
+								"value": "uuiid",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/equipos/<uuid>/jugadores/<uuid>",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"equipos",
+								"<uuid>",
+								"jugadores",
+								"<uuid>"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "paises",
+			"item": [
+				{
+					"name": "obtener jugadores de un pais",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/paises/<pais>/jugadores",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"paises",
+								"<pais>",
+								"jugadores"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

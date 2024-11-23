@@ -1,66 +1,49 @@
 package cl.zcamcal.clase.controllers;
 
-import java.util.ArrayList;
-
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
-import cl.zcamcal.clase.dto.EquipoDto;
-import cl.zcamcal.clase.dto.JugadorDto;
+import cl.zcamcal.clase.controllers.request.JugadorRequest;
+import cl.zcamcal.clase.controllers.response.ResumenJugadorResponse;
+import cl.zcamcal.clase.repository.JugadorInMemoryRepository;
 
 import java.util.List;
-import org.springframework.web.bind.annotation.RequestParam;
+import java.util.stream.Collectors;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("jugadores")
 public class JugadoresController {
 
-  private List<JugadorDto> jugadores;
-  private List<EquipoDto> equipos;
+  private JugadorInMemoryRepository repository;
 
-  public JugadoresController() {
-    this.jugadores = new ArrayList<>();
-    this.equipos = new ArrayList<>();
-
-    EquipoDto losJiJi = new EquipoDto("los jiji");
-    EquipoDto sandijuelas = new EquipoDto("sandijuelas");
-
-    this.equipos.add(losJiJi);
-    this.equipos.add(sandijuelas);
+  public JugadoresController(JugadorInMemoryRepository repository) {
+    this.repository = repository;
   }
 
-  @PutMapping(path = "///", consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<List<JugadorDto>>  buscarJugadores(@RequestParam(name = "sandijuela", required = false) String pais) {
-    return ResponseEntity.badRequest().build();
+  //TODO: tengo problemas al retornar los jugadores creados se ven vacios ;(
+  @GetMapping(path = "")
+  public ResponseEntity<List<ResumenJugadorResponse>>  buscarJugadores() {
+    List<JugadorRequest> jugadores = repository.filtrar();
+
+    List<ResumenJugadorResponse> transformed = jugadores.stream().map(jugador -> {
+      ResumenJugadorResponse response = new ResumenJugadorResponse();
+
+      return response;
+    }).collect(Collectors.toList());
+
+    return ResponseEntity.ok(transformed);
   }
 
-  @RequestMapping("")
-  public ResponseEntity<JugadorDto> crearJugador(@RequestBody(required = true) JugadorDto jugador) {
-    jugador = null;
-    this.jugadores.add(jugador);
-
-    if(jugador == null) {
-      ResponseEntity.badRequest().build();
-    }
-
-    if(jugador.getNombre() == null || jugador.getApellido().equalsIgnoreCase("")){
-      ResponseEntity.badRequest().build();
-    }
-
+  //TODO: esta creando bien sin embargo no valida que no sean vacios los textos
+  @PostMapping(path = "")
+  public ResponseEntity<JugadorRequest> crear(@RequestBody JugadorRequest jugador) {
+    this.repository.agregar(jugador);
     return ResponseEntity.ok(jugador);
-  }
-
-  @PatchMapping(path = "/{jugador}/{equipo}")
-  public ResponseEntity<JugadorDto> agregarJugadorAlEquipo(@PathVariable(name = "jugador") String jugador, @PathVariable(name = "equipo") String equipo) {
-    //validar que exista jugador 
-    //validar que exista equipo 
-    JugadorDto jugadorEncontrado = null;
-    jugadorEncontrado.setEquipo(jugador);
-
-    EquipoDto equipoEncontrado = null;
-
-    return ResponseEntity.ok(null);
   }
 
 }
